@@ -1,13 +1,15 @@
 import dotenv from "dotenv";
 import express from "express";
 import { env } from "./configs/env";
-import { router } from "./routes/containers";
+import { container_router } from "./routes/containers";
+import { log_middleware } from "./middlewares/log";
 
 dotenv.config();
 
 const app = express();
 
-app.use("/containers", router);
+app.use(log_middleware);
+app.use("/containers", container_router);
 
 if (env.SOCKET_PATH) {
   app.listen(env.EXPRESS_PORT, () => {
